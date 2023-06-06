@@ -12,8 +12,9 @@ class LoginScreen extends StatefulWidget {
 class LoginScreenState extends State<LoginScreen>{
 
   final formkey = GlobalKey<FormState>();
-  String username='';
+    String username='';
   String password = "";
+
 
   Widget build(context){
      return Container(
@@ -65,10 +66,18 @@ class LoginScreenState extends State<LoginScreen>{
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: ElevatedButton(onPressed: (){
+
+                
+              
               if(formkey.currentState!.validate()){
                     formkey.currentState!.save();
                     print('$username  $password');
+                    
+                    
               }
+              Navigator.push(context,MaterialPageRoute(builder: (context) => SecondRoute(username: username,)));
+              
+              
             },
              child: Text("Submit",
              style:TextStyle(
@@ -88,5 +97,36 @@ class LoginScreenState extends State<LoginScreen>{
 
      );
   }
+}
+
+
+class SecondRoute extends StatelessWidget{
+  const SecondRoute({Key? key, required this.username}) : super(key: key);
+
+  final String username;
+ Widget build(context){
+   return MaterialApp(
+    home:Scaffold(
+       body:Center(
+         child: Padding(
+           padding: const EdgeInsets.only(top:100.0),
+           child: Column(
+            children: [
+              Text("Hi $username"),
+              Text("Welcome to Hyperlabs"),
+              ElevatedButton(onPressed: () {  
+           Navigator.pop(context);  
+         }  ,
+               child: Text("Log Out"),
+               
+               )
+         
+            ],
+           ),
+         ),
+       )
+    )
+  );
+ }
 }
 
